@@ -1,0 +1,242 @@
+<html ng-app="Room" ng-controller="Ctrl">
+
+<head>
+	<title>The Mind OX - {{roomname}}</title>
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/style.css" />
+	<script>
+		(function (i, s, o, g, r, a, m) {
+		i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+			(i[r].q = i[r].q || []).push(arguments)
+		}, i[r].l = 1 * new Date(); a = s.createElement(o),
+			m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga'); ga('create', 'UA-98700445-1', 'auto'); ga('send', 'pageview');
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.13/angular.min.js"></script>
+	<script src="/client.js"></script>
+</head>
+
+<body>
+	<div id="videos" style="
+		width: -webkit-calc(100% - 348px);
+	">
+    <table style="
+		width: 100%;
+		height: 100%;
+	">
+        <tbody>
+            <tr style="
+		width: 100%;
+		height: 40%;
+	">
+                <td style="
+	">
+
+                    <div style="height: 200px;
+width: 300px;
+float: left;">
+                        <video id="video-0" autoplay="true" style="width: 300px;" showonhover=""></video>
+                        <div id="videoControlUser" hideonleave="">
+                            <!--button class="sendFile btn btn-default" ng-click="room.sendFile(key)">
+			<i class="fa fa-send-o fa-2x"></i>
+		</button-->
+                        </div>
+                        <!-- ngIf: room.status.mod -->
+                        <div id="videoControlMod" ng-if="room.status.mod" class="ng-scope">
+						</div><!-- end ngIf: room.status.mod -->
+						<div style="
+						position: relative;
+						top: -170px;
+					">
+							<div ng-repeat="x in getCards(0) track by $index" style="display: inline-block">
+								<img src="card-front.png" style="
+									width: 50px;
+								">
+								<span style="
+								position: relative;
+								left: -35px;
+								">{{x}}</span>
+							</div>
+							<div ng-repeat="x in getOfuscatedCards(0) track by $index" style="display: inline-block">
+								<img src="card-back.png" style="
+									width: 50px;
+								">
+							</div>
+						</div>
+                    </div>
+                    <!-- ngRepeat: (key,value) in users -->
+
+                </td>
+                <td style="
+	">
+                    <div style="height: 200px;width: 300px;float: right;">
+                        <video id="video-1" autoplay="true" style="width: 300px;" showonhover=""></video>
+                        <div id="videoControlUser" hideonleave="">
+                            <!--button class="sendFile btn btn-default" ng-click="room.sendFile(key)">
+			<i class="fa fa-send-o fa-2x"></i>
+		</button-->
+                        </div>
+                        <!-- ngIf: room.status.mod -->
+                        <div id="videoControlMod" ng-if="room.status.mod" class="ng-scope">
+                        </div><!-- end ngIf: room.status.mod -->
+						<div style="
+						position: relative;
+						top: -170px;
+					">
+							<div ng-repeat="x in getCards(1) track by $index" style="display: inline-block">
+								<img src="card-front.png" style="
+									width: 50px;
+								">
+								<span style="
+								position: relative;
+								left: -35px;
+								">{{x}}</span>
+							</div>
+							<div ng-repeat="x in getOfuscatedCards(1) track by $index" style="display: inline-block">
+								<img src="card-back.png" style="
+									width: 50px;
+								">
+							</div>
+						</div>
+                    </div>
+                    <!-- ngRepeat: (key,value) in users -->
+
+                </td>
+			</tr>
+			<tr style="width:100%;height:20%;">
+				<td></td>
+				<td>
+					<div>
+						<img src="card-front.png" style="
+										width: 200px;
+									">
+						<span ng-if="room.cardPlayed" style="
+						font-size: 40px;
+						font-weight: bold;
+						position: relative;
+						left: -115px;
+						">{{room.cardPlayed}}</span>
+					</div>
+				</td>
+				<td></td>
+			</tr>
+            <tr style="
+		width: 100%;
+		height: 40%;
+	">
+                <td style="
+	">
+                    <div style="height: 200px;
+width: 300px;
+float: left;">
+                        <video id="video-2" autoplay="true" style="width: 300px;" showonhover=""></video>
+                        <div id="videoControlUser" hideonleave="">
+                            <!--button class="sendFile btn btn-default" ng-click="room.sendFile(key)">
+			<i class="fa fa-send-o fa-2x"></i>
+		</button-->
+                        </div>
+                        <!-- ngIf: room.status.mod -->
+                        <div id="videoControlMod" ng-if="room.status.mod" class="ng-scope">
+                        </div><!-- end ngIf: room.status.mod -->
+						<div style="
+						position: relative;
+						top: -170px;
+					">
+							<div ng-repeat="x in getCards(2) track by $index" style="display: inline-block">
+								<img src="card-front.png" style="
+									width: 50px;
+								">
+								<span style="
+								position: relative;
+								left: -35px;
+								">{{x}}</span>
+							</div>
+							<div ng-repeat="x in getOfuscatedCards(2) track by $index" style="display: inline-block">
+								<img src="card-back.png" style="
+									width: 50px;
+								">
+							</div>
+						</div>
+                    </div>
+                    <!-- ngRepeat: (key,value) in users -->
+
+                </td>
+                <td style="
+	">
+                    <div style="height: 200px;
+width: 300px;
+float: right;">
+                        <video id="video-3" autoplay="true" style="width: 300px;" showonhover=""></video>
+                        <div id="videoControlUser" hideonleave="">
+                            <!--button class="sendFile btn btn-default" ng-click="room.sendFile(key)">
+			<i class="fa fa-send-o fa-2x"></i>
+		</button-->
+                        </div>
+                        <!-- ngIf: room.status.mod -->
+                        <div id="videoControlMod" ng-if="room.status.mod" class="ng-scope">
+                        </div><!-- end ngIf: room.status.mod -->
+						<div style="
+						position: relative;
+						top: -170px;
+					">
+							<div ng-repeat="x in getCards(3) track by $index" style="display: inline-block">
+								<img src="card-front.png" style="
+									width: 50px;
+								">
+								<span style="
+								position: relative;
+								left: -35px;
+								">{{x}}</span>
+							</div>
+							<div ng-repeat="x in getOfuscatedCards(3) track by $index" style="display: inline-block">
+								<img src="card-back.png" style="
+									width: 50px;
+								">
+							</div>
+						</div>
+                    </div>
+                    <!-- ngRepeat: (key,value) in users -->
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+	<div id="panel">
+		<h2>Vidas: <span id="lives">{{lives}}</span></h2>
+		<h2>Participants</h2>
+		<table class="table">
+			<tbody>
+				<tr>
+					<td><i class="action fa fa-user" ng-class="room.status.mod ? 'text-danger' : ''"></i> {{username}}
+					</td>
+					<td></td>
+					<td></td>
+					<td>
+						<i class="action fa" ng-class="room.status.smuted ? 'fa-microphone-slash' : 'fa-microphone'"
+							ng-click="room.admin('smute',username)"></i></td>
+					<td><i class="action fa" ng-class="room.status.vmuted ? 'fa-eye-slash' : 'fa-eye'"
+							ng-click="room.admin('vmute',username)"></i>
+					</td>
+				</tr>
+				<tr ng-repeat="(key, value) in users">
+					<td><i class="action fa fa-user" ng-class="value.status.mod ? 'text-danger' : ''"></i> {{key}}</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><i ng-if="room.status.mod" ng-click="room.admin('kick', key)"
+							class="action fa fa-times text-danger"></i></td>
+				</tr>
+			</tbody>
+		</table>
+		<button id="begin">Empezar!</button>
+	</div>
+</body>
+
+</html>

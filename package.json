@@ -1,0 +1,14 @@
+{
+  "name": "euphony",
+  "version": "0.0.1",
+  "dependencies": {
+    "socket.io": "1.0.6"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.3.x"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}
